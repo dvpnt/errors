@@ -76,7 +76,7 @@ exports.ForbiddenError = ForbiddenError;
 exports.NotFoundError = NotFoundError;
 exports.UrlNotFoundError = UrlNotFoundError;
 
-exports.errorsCreator = (obj) => (name, params, Parent = ServerError) => {
+exports.errorsCreator = (obj) => ({name, Parent = ServerError, ...params}) => {
 	obj[name] = class extends Parent {
 		constructor(constructorParams) {
 			super({

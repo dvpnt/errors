@@ -177,7 +177,7 @@ t.test('errors', (t) => {
 			const errors = {};
 			const create = errorsCreator(errors);
 
-			create('MyError');
+			create({name: 'MyError'});
 
 			t.type(errors.MyError, 'function');
 
@@ -195,7 +195,8 @@ t.test('errors', (t) => {
 			const errors = {};
 			const create = errorsCreator(errors);
 
-			create('MyError', {
+			create({
+				name: 'MyError',
 				message: 'my message',
 				userMessage: 'my user message'
 			});
