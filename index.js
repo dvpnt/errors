@@ -38,6 +38,17 @@ class ServerError extends BaseError {
 	}
 }
 
+class UnauthorizedError extends BaseError {
+	constructor(params) {
+		super({
+			status: 401,
+			message: 'Authentication is required',
+			userMessage: 'Для доступа к запрашиваемому ресурсу требуется аутентификация',
+			...params
+		});
+	}
+}
+
 class ForbiddenError extends BaseError {
 	constructor(params) {
 		super({
@@ -72,6 +83,7 @@ class UrlNotFoundError extends NotFoundError {
 
 exports.BaseError = BaseError;
 exports.ServerError = ServerError;
+exports.UnauthorizedError = UnauthorizedError;
 exports.ForbiddenError = ForbiddenError;
 exports.NotFoundError = NotFoundError;
 exports.UrlNotFoundError = UrlNotFoundError;

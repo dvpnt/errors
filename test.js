@@ -2,6 +2,7 @@ const t = require('tap');
 const {
 	BaseError,
 	ServerError,
+	UnauthorizedError,
 	ForbiddenError,
 	NotFoundError,
 	UrlNotFoundError,
@@ -106,6 +107,24 @@ t.test('errors', (t) => {
 			t.is(error.userMessage, 'Внутренняя ошибка сервера');
 			t.is(error.name, 'ServerError');
 			t.match(error.stack, /^ServerError: new message/);
+
+			t.end();
+		});
+
+		t.end();
+	});
+
+	t.test('UnauthorizedError', (t) => {
+		t.test('default error', (t) => {
+			const error = new UnauthorizedError();
+
+			t.is(error.message, 'Authentication is required');
+			t.is(
+				error.userMessage,
+				'Для доступа к запрашиваемому ресурсу требуется аутентификация'
+			);
+			t.is(error.name, 'UnauthorizedError');
+			t.match(error.stack, /^UnauthorizedError: Authentication is required/);
 
 			t.end();
 		});
