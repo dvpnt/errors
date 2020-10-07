@@ -95,6 +95,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Internal server error');
 			t.is(error.userMessage, 'Внутренняя ошибка сервера');
 			t.is(error.name, 'ServerError');
+			t.is(error.status, 500);
 			t.match(error.stack, /^ServerError: Internal server error/);
 
 			t.end();
@@ -106,6 +107,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'new message');
 			t.is(error.userMessage, 'Внутренняя ошибка сервера');
 			t.is(error.name, 'ServerError');
+			t.is(error.status, 500);
 			t.match(error.stack, /^ServerError: new message/);
 
 			t.end();
@@ -124,6 +126,7 @@ t.test('errors', (t) => {
 				'Для доступа к запрашиваемому ресурсу требуется аутентификация'
 			);
 			t.is(error.name, 'UnauthorizedError');
+			t.is(error.status, 401);
 			t.match(error.stack, /^UnauthorizedError: Authentication is required/);
 
 			t.end();
@@ -139,6 +142,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Access denied');
 			t.is(error.userMessage, 'Доступ запрещён');
 			t.is(error.name, 'ForbiddenError');
+			t.is(error.status, 403);
 			t.match(error.stack, /^ForbiddenError: Access denied/);
 
 			t.end();
@@ -154,6 +158,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Entity is not found');
 			t.is(error.userMessage, 'Сущность не найдена');
 			t.is(error.name, 'NotFoundError');
+			t.is(error.status, 404);
 			t.match(error.stack, /^NotFoundError: Entity is not found/);
 
 			t.end();
@@ -169,6 +174,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Url is not found');
 			t.is(error.userMessage, 'Страница не найдена');
 			t.is(error.name, 'UrlNotFoundError');
+			t.is(error.status, 404);
 			t.match(error.stack, /^UrlNotFoundError: Url is not found/);
 
 			t.end();
@@ -180,6 +186,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Url "https://exmaple.com" is not found');
 			t.is(error.userMessage, 'Страница не найдена');
 			t.is(error.name, 'UrlNotFoundError');
+			t.is(error.status, 404);
 			t.match(
 				error.stack,
 				/^UrlNotFoundError: Url "https:\/\/exmaple\.com" is not found/
@@ -205,6 +212,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'Internal server error');
 			t.is(error.userMessage, 'Внутренняя ошибка сервера');
 			t.is(error.name, 'MyError');
+			t.is(error.status, 500);
 			t.match(error.stack, /^MyError: Internal server error/);
 
 			t.end();
@@ -227,6 +235,7 @@ t.test('errors', (t) => {
 			t.is(error.message, 'my message');
 			t.is(error.userMessage, 'my user message');
 			t.is(error.name, 'MyError');
+			t.is(error.status, 500);
 			t.match(error.stack, /^MyError: my message/);
 
 			t.end();
