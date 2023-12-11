@@ -6,6 +6,7 @@ const {
 	ForbiddenError,
 	NotFoundError,
 	UrlNotFoundError,
+	create,
 	errorsCreator
 } = require('./');
 
@@ -14,10 +15,10 @@ t.test('errors', (t) => {
 		t.test('default error', (t) => {
 			const error = new BaseError();
 
-			t.is(error.message, 'Error has occured');
+			t.is(error.message, 'Error has occurred');
 			t.is(error.userMessage, 'Произошла ошибка');
 			t.is(error.name, 'BaseError');
-			t.match(error.stack, /^BaseError: Error has occured/);
+			t.match(error.stack, /^BaseError: Error has occurred/);
 
 			t.end();
 		});
@@ -26,10 +27,10 @@ t.test('errors', (t) => {
 			const error = new BaseError({status: 500});
 
 			t.is(error.status, 500);
-			t.is(error.message, 'Error has occured');
+			t.is(error.message, 'Error has occurred');
 			t.is(error.userMessage, 'Произошла ошибка');
 			t.is(error.name, 'BaseError');
-			t.match(error.stack, /^BaseError: Error has occured/);
+			t.match(error.stack, /^BaseError: Error has occurred/);
 
 			t.end();
 		});
@@ -191,6 +192,46 @@ t.test('errors', (t) => {
 				error.stack,
 				/^UrlNotFoundError: Url "https:\/\/exmaple\.com" is not found/
 			);
+
+			t.end();
+		});
+
+		t.end();
+	});
+
+	t.test('create', (t) => {
+		t.test('default', (t) => {
+			const MyError = create({name: 'MyError'});
+
+			t.type(MyError, 'function');
+
+			const error = new MyError();
+
+			t.is(error.message, 'Internal server error');
+			t.is(error.userMessage, 'Внутренняя ошибка сервера');
+			t.is(error.name, 'MyError');
+			t.is(error.status, 500);
+			t.match(error.stack, /^MyError: Internal server error/);
+
+			t.end();
+		});
+
+		t.test('custom messages', (t) => {
+			const MyError = create({
+				name: 'MyError',
+				message: 'my message',
+				userMessage: 'my user message'
+			});
+
+			t.type(MyError, 'function');
+
+			const error = new MyError();
+
+			t.is(error.message, 'my message');
+			t.is(error.userMessage, 'my user message');
+			t.is(error.name, 'MyError');
+			t.is(error.status, 500);
+			t.match(error.stack, /^MyError: my message/);
 
 			t.end();
 		});

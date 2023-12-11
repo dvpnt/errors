@@ -1,6 +1,6 @@
 const _ = require('underscore');
 
-const defaultMessage = 'Error has occured';
+const defaultMessage = 'Error has occurred';
 const defaultUserMessage = 'Произошла ошибка';
 
 class BaseError extends Error {
@@ -88,15 +88,18 @@ exports.ForbiddenError = ForbiddenError;
 exports.NotFoundError = NotFoundError;
 exports.UrlNotFoundError = UrlNotFoundError;
 
-exports.errorsCreator = (obj) => ({name, Parent = ServerError, ...params}) => {
-	obj[name] = class extends Parent {
-		constructor(constructorParams) {
-			super({
-				...params,
-				...constructorParams
-			});
-		}
-	};
+
+exports.create = ({Parent = ServerError, ...params}) => class extends Parent {
+	constructor(constructorParams) {
+		super({
+			...params,
+			...constructorParams
+		});
+	}
+};
+
+exports.errorsCreator = (obj) => ({name, ...params}) => {
+	obj[name] = exports.create(params);
 
 	Object.defineProperty(obj[name], 'name', {
 		value: name,
